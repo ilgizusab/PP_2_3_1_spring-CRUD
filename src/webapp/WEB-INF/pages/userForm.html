@@ -1,44 +1,54 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Users</title>
+    <title>User Form</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
+
         h1 {
             color: #333;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
+
         table, th, td {
             border: 1px solid #ddd;
         }
+
         th, td {
             padding: 10px;
             text-align: left;
         }
+
         th {
             background-color: #f2f2f2;
         }
+
         a {
             text-decoration: none;
             color: #007bff;
         }
+
         a:hover {
             text-decoration: underline;
         }
+
         form {
             margin-top: 20px;
         }
+
         label {
             display: block;
             margin-top: 10px;
         }
+
         input[type="text"] {
             width: 100%;
             padding: 8px;
@@ -46,6 +56,7 @@
             margin-bottom: 10px;
             box-sizing: border-box;
         }
+
         button {
             padding: 10px 20px;
             background-color: #007bff;
@@ -53,36 +64,24 @@
             border: none;
             cursor: pointer;
         }
+
         button:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-<h1>Users</h1>
-<a href="/users/new">Add User</a>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.id}"></td>
-        <td th:text="${user.name}"></td>
-        <td th:text="${user.lastName}"></td>
-        <td th:text="${user.email}"></td>
-        <td>
-            <a th:href="@{/users/edit(id=${user.id})}">Edit</a>
-            <a th:href="@{/users/delete(id=${user.id})}">Delete</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<h1 th:if="${user.getId() == null}">Create User</h1>
+<h1 th:if="${user.getId() != null}">Edit User</h1>
+<form th:action="@{${user.id == null ? '/users/new' : '/users/edit'}}" th:object="${user}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <label for="name">Name:</label>
+    <input type="text" th:field="*{name}" id="name">
+    <label for="lastName">Last Name:</label>
+    <input type="text" th:field="*{lastName}" id="lastName">
+    <label for="email">Email:</label>
+    <input type="text" th:field="*{email}" id="email">
+    <button type="submit">Save</button>
+</form>
 </body>
 </html>
