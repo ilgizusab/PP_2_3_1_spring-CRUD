@@ -7,12 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
-    private static final Logger logger = Logger.getLogger("org.apache.catalina");
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -34,7 +31,10 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void update(User user) {
+    public void update(User userData, User user) {
+        user.setName(userData.getName());
+        user.setLastName(userData.getLastName());
+        user.setEmail(userData.getEmail());
         entityManager.merge(user);
     }
 

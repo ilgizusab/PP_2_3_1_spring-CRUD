@@ -1,7 +1,5 @@
 package web.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
@@ -13,7 +11,6 @@ import java.util.List;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
     private final UserRepository userRepository;
 
     @Autowired
@@ -37,9 +34,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(User user) {
-        log.info("Updating user: " + user);
-        userRepository.update(user);
+    public void updateUser(User userData, User user) {
+        userRepository.update(userData, user);
     }
 
     @Override

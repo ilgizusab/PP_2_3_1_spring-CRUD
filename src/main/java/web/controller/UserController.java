@@ -50,14 +50,9 @@ public class UserController {
     }
 
     @PostMapping("/users/edit")
-    public String updateUser(@ModelAttribute User user, HttpSession session) {
-        User sessionUser = (User) session.getAttribute("user");
-        if (sessionUser != null) {
-            sessionUser.setName(user.getName());
-            sessionUser.setLastName(user.getLastName());
-            sessionUser.setEmail(user.getEmail());
-            userService.updateUser(sessionUser);
-        }
+    public String updateUser(@ModelAttribute User userData, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        userService.updateUser(userData, user);
         return "redirect:/users";
     }
 
